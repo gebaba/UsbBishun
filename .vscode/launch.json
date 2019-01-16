@@ -1,0 +1,33 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "targetArchitecture": "arm",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bs_usb.elf",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "preLaunchTask": "make",
+            "MIMode": "gdb",
+            "miDebuggerPath": "${workspaceFolder}/Tools/gcc-arm-none-eabi-5_4-2016q3-20160926-win32/bin/arm-none-eabi-gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Set path",
+                    "text": "cd ${workspaceFolder}"
+                },
+                {
+                    "description": "Load bs_usb.elf for debugging",
+                    "text": "source .gdbinit"
+                }
+            ]
+        }
+    ]
+}

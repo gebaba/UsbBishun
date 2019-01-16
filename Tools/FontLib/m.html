@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="16" height="16"></canvas>
+    <script>
+        
+        var context = document.getElementById('canvas').getContext('2d');
+        
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.font = '16px SimSun';
+
+        function getNumbers(a, f) {
+            context.clearRect(0, 0, 16, 16);
+            context.fillText(a, 8, 8);
+            var data = context.getImageData(0, 0, 16, 16).data;
+            var d = [];
+            for (var i = 0; i < data.length; i += 4) {
+                d.push(data[i + 3] ? 1 : 0);
+            }
+            var numbers = [];
+			for (var i = 0; i < 16; i++) {
+				for (var j = 0; j < 2; j++) {
+					var n = 0;
+					for (var k = 0; k < 8; k++) {
+						n >>= 1;
+						if (d[i + (k + j * 8) * 16]) {
+							n |= 0x80;
+						}
+					}
+					if (f) {
+						n = 255 - n;
+					}
+					n = n.toString(16);
+					numbers.push((n.length == 1 ? '\\x0' : '\\x') + n);
+				}
+			}
+            return numbers;
+        }
+		
+        for (var i = 0x4e00; i <= 0x9fa5; i++) {
+            console.log('"' + getNumbers(String.fromCharCode(i)).join('') + '"');
+        }
+        //for (var i = 'a'.charCodeAt(0); i <= 'z'.charCodeAt(0); i++) {
+        //    console.log('"' + getNumbers(String.fromCharCode(i)).join('') + '"');
+        //}
+        //var a = '一丨丿丶乙';
+        //for (var i = 0; i < a.length; i++) {
+        //    console.log('"' + getNumbers(a[i]).join('') + '"');
+        //}
+        //console.log('"' + getNumbers('拼', -1).join('') + '"');
+		//console.log('"' + getNumbers('五', -1).join('') + '"');
+		
+    </script>
+</body>
+</html>
